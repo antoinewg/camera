@@ -1,0 +1,19 @@
+{
+  "projectName": "camera",
+  "mode": "file-router",
+  "typescript": true,
+  "tailwind": true,
+  "packageManager": "npm",
+  "git": true,
+  "version": 1,
+  "framework": "react-cra",
+  "chosenAddOns": [
+    "start",
+    "sentry",
+    "shadcn",
+    "t3env",
+    "tRPC",
+    "biome",
+    "tanstack-query"
+  ]
+}
