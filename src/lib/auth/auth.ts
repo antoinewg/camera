@@ -3,6 +3,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import * as schema from "../db/schema"
 import { db } from "../db";
+import { reactStartCookies } from "better-auth/react-start"
 
 export const auth = betterAuth({
     socialProviders: {
@@ -20,5 +21,5 @@ export const auth = betterAuth({
             verification: schema.verification,
         },
     }),
-    // plugins: [reactStartCookies()]
+    plugins: [reactStartCookies()]
 })
