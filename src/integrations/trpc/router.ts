@@ -2,17 +2,10 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 // import { z } from 'zod'
 
-import { createTRPCRouter, publicProcedure } from "./init";
+import { createTRPCRouter, protectedProcedure } from "./init";
 
 const peopleRouter = {
-  list: publicProcedure.query(async () => [
-    {
-      name: "John Doe",
-    },
-    {
-      name: "Jane Doe",
-    },
-  ]),
+  username: protectedProcedure.query(async ({ ctx }) => ctx.session?.user.name),
 } satisfies TRPCRouterRecord;
 
 export const trpcRouter = createTRPCRouter({

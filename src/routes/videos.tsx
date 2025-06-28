@@ -1,6 +1,8 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { UploadButton } from "@/components/uploadthing";
 import { getUser } from "@/lib/auth/auth-server";
+import { useQuery } from "@tanstack/react-query";
+import { useTRPC } from "@/integrations/trpc/react";
 
 export const Route = createFileRoute("/videos")({
   component: VideosPage,
@@ -18,12 +20,16 @@ export const Route = createFileRoute("/videos")({
 
 function VideosPage() {
   const { user } = Route.useLoaderData();
+  const trpc = useTRPC();
+  const { data: username } = useQuery({
+    ...trpc.people.username.queryOptions(),
+  });
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold tracking-tight mb-6">
-          Videos of {user.name}
+          Videos of {user.name} - {username}
         </h1>
         <UploadButton
           endpoint="imageUploader"
