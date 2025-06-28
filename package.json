@@ -11,8 +11,8 @@
     "build": "vite build",
     "serve": "vite preview",
     "test": "vitest run",
-    "format": "biome format",
-    "lint": "biome lint",
+    "format": "biome format --write",
+    "lint": "biome lint --fix",
     "check": "biome check"
   },
   "dependencies": {
