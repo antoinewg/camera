@@ -13,6 +13,7 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VideosRouteImport } from './routes/videos'
 import { Route as IndexRouteImport } from './routes/index'
+import { ServerRoute as ApiUploadthingServerRouteImport } from './routes/api.uploadthing'
 import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api.trpc.$'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api.auth.$'
 
@@ -27,6 +28,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ApiUploadthingServerRoute = ApiUploadthingServerRouteImport.update({
+  id: '/api/uploadthing',
+  path: '/api/uploadthing',
+  getParentRoute: () => rootServerRouteImport,
 } as any)
 const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
   id: '/api/trpc/$',
@@ -65,27 +71,31 @@ export interface RootRouteChildren {
   VideosRoute: typeof VideosRoute
 }
 export interface FileServerRoutesByFullPath {
+  '/api/uploadthing': typeof ApiUploadthingServerRoute
   '/api/auth/$': typeof ApiAuthSplatServerRoute
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
 }
 export interface FileServerRoutesByTo {
+  '/api/uploadthing': typeof ApiUploadthingServerRoute
   '/api/auth/$': typeof ApiAuthSplatServerRoute
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
+  '/api/uploadthing': typeof ApiUploadthingServerRoute
   '/api/auth/$': typeof ApiAuthSplatServerRoute
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/auth/$' | '/api/trpc/$'
+  fullPaths: '/api/uploadthing' | '/api/auth/$' | '/api/trpc/$'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/auth/$' | '/api/trpc/$'
-  id: '__root__' | '/api/auth/$' | '/api/trpc/$'
+  to: '/api/uploadthing' | '/api/auth/$' | '/api/trpc/$'
+  id: '__root__' | '/api/uploadthing' | '/api/auth/$' | '/api/trpc/$'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
+  ApiUploadthingServerRoute: typeof ApiUploadthingServerRoute
   ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
   ApiTrpcSplatServerRoute: typeof ApiTrpcSplatServerRoute
 }
@@ -110,6 +120,13 @@ declare module '@tanstack/react-router' {
 }
 declare module '@tanstack/react-start/server' {
   interface ServerFileRoutesByPath {
+    '/api/uploadthing': {
+      id: '/api/uploadthing'
+      path: '/api/uploadthing'
+      fullPath: '/api/uploadthing'
+      preLoaderRoute: typeof ApiUploadthingServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
     '/api/trpc/$': {
       id: '/api/trpc/$'
       path: '/api/trpc/$'
@@ -135,6 +152,7 @@ export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
+  ApiUploadthingServerRoute: ApiUploadthingServerRoute,
   ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
   ApiTrpcSplatServerRoute: ApiTrpcSplatServerRoute,
 }
