@@ -5,24 +5,26 @@ import { getUser } from "@/lib/auth/auth-server";
 export const Route = createFileRoute("/videos")({
   component: VideosPage,
   beforeLoad: async () => {
-    const user = await getUser()
-    return { user }
+    const user = await getUser();
+    return { user };
   },
   loader: async ({ context }) => {
-    if (!context.user) {
-      throw redirect({ to: "/" })
+    if (!context.user.id) {
+      throw redirect({ to: "/" });
     }
-    return { user: context.user }
+    return { user: context.user };
   },
 });
 
 function VideosPage() {
-  const { user } = Route.useLoaderData()
+  const { user } = Route.useLoaderData();
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold tracking-tight mb-6">Videos of {user.name}</h1>
+        <h1 className="text-3xl font-bold tracking-tight mb-6">
+          Videos of {user.name}
+        </h1>
         <UploadButton
           endpoint="imageUploader"
           onClientUploadComplete={(res) => {

@@ -1,9 +1,10 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { signIn, signOut, useSession } from "@/lib/auth/auth-client";
 
 export default function Header() {
   const { data: session, isPending } = useSession();
+  const navigate = useNavigate();
 
   return (
     <header className="p-2 flex gap-2 bg-white text-black justify-between">
@@ -19,7 +20,12 @@ export default function Header() {
       {!isPending && (
         <div className="flex items-center gap-2">
           {session?.user ? (
-            <Button onClick={() => signOut()} variant="outline">
+            <Button
+              onClick={() =>
+                signOut({}, { onSuccess: () => navigate({ to: "/" }) })
+              }
+              variant="outline"
+            >
               Sign Out
             </Button>
           ) : (
