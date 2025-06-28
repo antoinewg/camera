@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { useSession } from '@/lib/auth/auth-client'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
@@ -6,9 +6,10 @@ export const Route = createFileRoute('/')({
 })
 
 function App() {
+  const { data } = useSession()
   return (
-    <div className="text-center">
-      <Button onClick={() => console.log("start")}>start</Button>
+    <div>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   )
 }
